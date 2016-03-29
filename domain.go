@@ -37,7 +37,7 @@ func ReadDomain(name, selector, keyfile string) (domain *Domain, err error) {
 
 // Sign header hash using RSA algorithm defined in PKCS#1 version 1.5. 
 // Used for b= signature tag.
-func (d *Domain) Sign(hash []byte) (signed []byte, err error) {
+func (d *Domain) sign(hash []byte) (signed []byte, err error) {
 	return rsa.SignPKCS1v15(rand.Reader, d.PrivateKey, Hash, hash)
 }
 

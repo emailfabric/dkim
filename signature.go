@@ -94,7 +94,7 @@ func (sig *Signature) SignHeader(header mail.Header) (err error) {
 	sum := hh.Sum(sig.value())
 
 	// hash is signed using RSA algorithm defined in PKCS#1 version 1.5
-	signed, err := sig.domain.Sign(sum)
+	signed, err := sig.domain.sign(sum)
 	if err != nil {
 		return
 	}
