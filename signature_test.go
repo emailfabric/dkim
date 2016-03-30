@@ -67,6 +67,9 @@ func TestSignWithDomain(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	
+	// note that the public key record has "t=y", which means that receivers will treat the
+	// message as any other unsigned message, abusing the private key is useless
 
 	sig := NewSignature(domain)
 
