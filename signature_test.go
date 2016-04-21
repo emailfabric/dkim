@@ -2,7 +2,7 @@ package dkim
 
 import (
 	"encoding/base64"
-    "fmt"
+	"fmt"
 	"io"
 	"net/mail"
 	"os"
@@ -67,7 +67,7 @@ func TestSignWithDomain(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	
+
 	// note that the public key record has "t=y", which means that receivers will treat the
 	// message as any other unsigned message, abusing the private key is useless
 
@@ -85,17 +85,17 @@ func TestSignWithDomain(t *testing.T) {
 		t.Fatal(err)
 	}
 
-    // note that the order of headers in h= is non-determistic
-    
+	// note that the order of headers in h= is non-determistic
+
 	out, err := os.Create("test/out.txt")
 	if err != nil {
 		t.Fatal(err)
 	}
 	sig.WriteTo(out)
-    out.Close()
-    
-    fmt.Println("If opendkim is installed, run the following command to test the signature:")
-    fmt.Println("")
-    fmt.Println("    cat test/out.txt test/in.txt | opendkim-testmsg")
-    fmt.Println("")
+	out.Close()
+
+	fmt.Println("If opendkim is installed, run the following command to test the signature:")
+	fmt.Println("")
+	fmt.Println("    cat test/out.txt test/in.txt | opendkim-testmsg")
+	fmt.Println("")
 }

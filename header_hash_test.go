@@ -22,4 +22,3 @@ func TestRelaxedHeaderCanon(t *testing.T) {
 		t.Errorf("unexpected output: %q\n", th.String())
 	}
 }
-

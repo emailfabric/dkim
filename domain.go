@@ -9,7 +9,7 @@ import (
 	"io/ioutil"
 )
 
-// Domain used for DKIM signing. Which domain to use for signing is left to the user. 
+// Domain used for DKIM signing. Which domain to use for signing is left to the user.
 // Common (and best) practice is to use the same domain as in the Sender: or From: header.
 type Domain struct {
 	Name       string
@@ -35,7 +35,7 @@ func ReadDomain(name, selector, keyfile string) (domain *Domain, err error) {
 	return
 }
 
-// Sign header hash using RSA algorithm defined in PKCS#1 version 1.5. 
+// Sign header hash using RSA algorithm defined in PKCS#1 version 1.5.
 // Used for b= signature tag.
 func (d *Domain) sign(hash []byte) (signed []byte, err error) {
 	return rsa.SignPKCS1v15(rand.Reader, d.PrivateKey, Hash, hash)
@@ -54,10 +54,9 @@ func GenerateKeyPair(bits int) (keyPEM []byte, pubB64 string, err error) {
 	if err != nil {
 		return
 	}
-	der := x509.MarshalPKCS1PrivateKey(privateKey)
 	keyPEM = pem.EncodeToMemory(&pem.Block{
 		Type:  "RSA PRIVATE KEY",
-		Bytes: der,
+		Bytes: x509.MarshalPKCS1PrivateKey(privateKey),
 	})
 
 	publicKey := privateKey.Public()

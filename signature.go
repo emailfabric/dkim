@@ -1,4 +1,4 @@
-// Library for signing emails with DKIM.
+// Package dkim is used for signing emails with DKIM.
 package dkim
 
 import (
@@ -10,11 +10,11 @@ import (
 	"strings"
 )
 
-// Hash is the algorithm used for hashing. SHA256 is recommended by the RFC. 
+// Hash is the algorithm used for hashing. SHA256 is recommended by the RFC.
 // Change this to crypto.SHA1 if you need to.
 var Hash = crypto.SHA256
 
-// SignHeaderFields lists the header names to sign. These headers are 
+// SignHeaderFields lists the header names to sign. These headers are
 // recommended in RFC 6376 section 5.4.1. The list can be changed at will.
 // This implementation signs each instance, if the header field occurs more than once.
 // The basic rule for choosing fields to include is to select those fields that

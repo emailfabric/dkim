@@ -1,5 +1,7 @@
 # dkim
 
+[![](https://godoc.org/github.com/emailfabric/dkim?status.svg)](http://godoc.org/github.com/emailfabric/dkim)
+
 Library for signing emails with DKIM.
 
 The purpose of this library is to create a solution for DKIM signing in Go that is fast, simple, and suitable for bulk mail applications.
