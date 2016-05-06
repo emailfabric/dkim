@@ -24,6 +24,7 @@ func newSimpleBodyHash(hash hash.Hash) *simpleBodyHash {
 // It ignores all empty lines at the end of the last Write.
 // Close() should be called to add the final single CRLF.
 func (bh *simpleBodyHash) Write(p []byte) (n int, err error) {
+    // note: n is number consumed from p, not number written to hash
 	l := len(p)
 	if l == 0 {
 		return
@@ -44,23 +45,22 @@ func (bh *simpleBodyHash) Write(p []byte) (n int, err error) {
 	// write trailing CR/LFs from last chunk if this chunk has non-empty lines
 	if len(bh.crlfs) != 0 && i > 0 {
 		nw, ew := bh.h.Write(bh.crlfs)
-		bh.crlfs = bh.crlfs[0:0] // clear buffer
-		n += nw
 		if ew != nil {
-			return n, ew
+		    bh.crlfs = bh.crlfs[nw:]
+			return 0, ew
 		}
+		bh.crlfs = bh.crlfs[0:0] // clear buffer
 	}
 	// write this chunk up to trailing CR/LFs
 	nw, ew := bh.h.Write(p[0:i])
-	n += nw
 	if ew != nil {
-		return n, ew
+		return nw, ew
 	}
 	// save trailing CR/LFs for next write
 	if i != l {
 		bh.crlfs = append(bh.crlfs, p[i:l]...)
 	}
-	return
+	return l, nil
 }
 
 // Sum calculates the hash.
