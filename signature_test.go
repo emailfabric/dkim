@@ -11,8 +11,8 @@ import (
 
 func TestHeaderHash(t *testing.T) {
 	/*
-	   opendkim-testmsg -d emailfabric.com -k test/test.rsa -s test -C < test/in.txt > test/out-opendkim.txt
-	   opendkim-testmsg < test/out-opendkim.txt
+	   opendkim-testmsg -d emailfabric.com -k testdata/test.rsa -s test -C < testdata/in.txt > testdata/out-opendkim.txt
+	   opendkim-testmsg < testdata/out-opendkim.txt
 
 	   DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=emailfabric.com;
 	   	s=test; t=1458847942;
@@ -34,7 +34,7 @@ func TestHeaderHash(t *testing.T) {
 	hh.AddHeader("Date", "Fri, 11 Jul 2003 21:00:37 -0700 (PDT)")
 	sum := hh.Sum("v=1; a=rsa-sha256; c=relaxed/simple; d=emailfabric.com; s=test; t=1458847942; bh=2jUSOH9NhtVGCQWNr9BrIAPreKQjO6Sn7XIkfJVOzv8=; h=From:To:Subject:Date; b=")
 
-	domain, err := ReadDomain("emailfabric.com", "test", "test/test.rsa")
+	domain, err := ReadDomain("emailfabric.com", "test", "testdata/test.rsa")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -52,7 +52,7 @@ func TestHeaderHash(t *testing.T) {
 
 func TestSignWithDomain(t *testing.T) {
 
-	in, err := os.Open("test/in.txt")
+	in, err := os.Open("testdata/in.txt")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -63,7 +63,7 @@ func TestSignWithDomain(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	domain, err := ReadDomain("emailfabric.com", "test", "test/test.rsa")
+	domain, err := ReadDomain("emailfabric.com", "test", "testdata/test.rsa")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -87,7 +87,7 @@ func TestSignWithDomain(t *testing.T) {
 
 	// note that the order of headers in h= is non-determistic
 
-	out, err := os.Create("test/out.txt")
+	out, err := os.Create("testdata/out.txt")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -96,6 +96,6 @@ func TestSignWithDomain(t *testing.T) {
 
 	fmt.Println("If opendkim is installed, run the following command to test the signature:")
 	fmt.Println("")
-	fmt.Println("    cat test/out.txt test/in.txt | opendkim-testmsg")
+	fmt.Println("    cat testdata/out.txt testdata/in.txt | opendkim-testmsg")
 	fmt.Println("")
 }

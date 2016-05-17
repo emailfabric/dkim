@@ -18,7 +18,7 @@ The hashing algorithm is considered a global policy and can be changed from SHA2
 
 First create a signing domain from a private key in memory or read it from disk:
 
-	domain, err := dkim.ReadDomain("emailfabric.com", "test", "test/test.rsa")
+	domain, err := dkim.ReadDomain("emailfabric.com", "test", "testdata/test.rsa")
 	if err != nil {
 		return
 	}
